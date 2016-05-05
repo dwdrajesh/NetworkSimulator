@@ -1,0 +1,9 @@
+g++ main.cpp Frame.cpp Node.cpp Host.cpp -std=gnu++11 -pthread
+
+
+
+gdb ./a.out
+
+Press r and enter
+
+When it crashes, type 'bt' for backtrace. This will tell you where the crash happens. If it's a pesky memory bug, you can also try running it in valgrind to find out of bounds and other memory errors. Install valgrind (and alleyoop for a nice gui frontend) and run it as 
