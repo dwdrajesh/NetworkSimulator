@@ -28,7 +28,7 @@ int main()
     //s1.
     //p1.Run(&f1);
     //p1.Run(&f2);
-    Host Alice("Alice", & p1);
+    Host Alice("XYZ", & p1);
     //cout << Bob1.getAddress();
     //Alice.setFrame(f1, "Rajesh");
     Host Bob("Bob", & p3);

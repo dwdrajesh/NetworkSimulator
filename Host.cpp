@@ -145,22 +145,13 @@ void Host::setFrame(Frame * f1, std::string payload)
     f1->setsourceAdd(this->address);
     f1->setDestAdd(this->destAddress);
     f1->setPayload(payload);
-    if (this->getName() == "Alice")
-    {
+
         std::ofstream myfile;
-        myfile.open("aliceTx.txt", std::ios::app);
+        myfile.open(this->getName() + "Tx.txt", std::ios::app);
         myfile << std::cout << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
         std::cout << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
         myfile.close();
-    }
-    if (this->getName() == "Bob")
-    {
-        std::ofstream myfile;
-        myfile.open("bobTx.txt", std::ios::app);
-        myfile << std::cout << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
-        std::cout << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
-        myfile.close();
-    }
+    
 }
 
 void Host::processFrame(Frame * f1)
@@ -169,22 +160,12 @@ void Host::processFrame(Frame * f1)
     std::string srcAdd = f1->getsourceAdd();
     std::string destAdd = f1->getDestAdd();
     f1->clearPayload();
-    if (this->getName() == "Alice")
-    {
+
         std::ofstream myfile;
-        myfile.open("aliceRx.txt", std::ios::app);
+        myfile.open(this->getName() + "Rx.txt", std::ios::app);
         myfile << this->getName() << " : " << "Payload \" " <<  this->payload << " \" received..." << " from link " << f1->getName() << std::endl;
         std::cout << this->getName() << " : " << "Payload \" " <<  this->payload << " \" received..." << " from link " << f1->getName() << std::endl;
         myfile.close();
-    }
-    if (this->getName() == "Bob")
-    {
-        std::ofstream myfile;
-        myfile.open("bobRx.txt", std::ios::app);
-        myfile << this->getName() << " : " << "Payload \" " <<  this->payload << " \" received..." << " from link " << f1->getName() << std::endl;
-        std::cout << this->getName() << " : " << "Payload \" " <<  this->payload << " \" received..." << " from link " << f1->getName() << std::endl;
-        myfile.close();
-    }
 
 }
 void Host::run(int randomN)
