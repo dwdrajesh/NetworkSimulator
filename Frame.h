@@ -18,7 +18,9 @@ class Frame
     void setDestAdd(std::string);
     void setPayload(std::string);
     void clearPayload();
-    std::string getPayload();	
+    void setAddresses();
+    //void
+    std::string getPayload();
     std::mutex mymutex;
 	int isempty();
     protected:

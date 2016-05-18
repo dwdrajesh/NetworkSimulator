@@ -9,3 +9,13 @@ Press r and enter
 When it crashes, type 'bt' for backtrace. This will tell you where the crash happens. If it's a pesky memory bug, you can also try running it in valgrind to find out of bounds and other memory errors. Install valgrind (and alleyoop for a nice gui frontend) and run it as 
 
 alleyoop ./a.out
+
+
+
+% Note: Automatic variables in Makefile: 
+% $@ = Target filename
+% $< = First prerequisite file
+% $^ ALl prerequisite files
+
+
+-c option in g++ makes final output file with same name as source .cpp file but extension will be .o

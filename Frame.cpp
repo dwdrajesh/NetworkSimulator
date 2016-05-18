@@ -17,26 +17,28 @@ std::string Frame::getsourceAdd(){
     return this->sourceAdd;
 }
 void Frame::setsourceAdd(std::string a){
-    mymutex.lock();
+    //std::mutex * thismutex =  (mymutex);
+    this->mymutex.lock();
     this->sourceAdd = a;
-    mymutex.unlock();
+    this->mymutex.unlock();
 
 }
 std::string Frame::getDestAdd(){
     return this->destAdd;
 }
 void Frame::setDestAdd(std::string b){
-    mymutex.lock();
+    this->mymutex.lock();
     this->destAdd = b;
-    mymutex.unlock();
+    this->mymutex.unlock();
 }
 void Frame::setPayload(std::string c){
-    mymutex.lock();
+    this->mymutex.lock();
     this->payload = c;
 	this->empty = 0;
-    mymutex.unlock();
+    this->mymutex.unlock();
 }
-std::string Frame::getPayload(){
+std::string Frame::getPayload()
+{
     return this->payload;
 }
 int Frame::isempty()
@@ -45,10 +47,12 @@ int Frame::isempty()
 }
 void Frame::clearPayload()
 {
-    mymutex.lock();
+    this->mymutex.lock();
+    this->sourceAdd.clear();
+    this->destAdd.clear();
     this->payload.clear();
 	this->empty = 1;
-    mymutex.unlock();
+    this->mymutex.unlock();
 }
 Frame::~Frame()
 {
