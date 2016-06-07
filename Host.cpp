@@ -141,32 +141,30 @@ int Host::poissonDelay(int randomN)
 }
 void Host::setFrame(Frame * f1, std::string payload)
 {
+    f1->setPayload(this->address, this->destAddress, payload);
 
-    f1->setsourceAdd(this->address);
-    f1->setDestAdd(this->destAddress);
-    f1->setPayload(payload);
-
-        std::ofstream myfile;
-        myfile.open(this->getName() + "Tx.txt", std::ios::app);
-        myfile << std::cout << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
-        std::cout << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
-        myfile.close();
-    
+    std::ofstream myfile;
+    myfile.open(this->getName() + "Tx.txt", std::ios::app);
+    myfile << std::cout << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
+    std::cout << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
+    myfile.close();
 }
 
 void Host::processFrame(Frame * f1)
 {
+    if (f1->getDestAdd() == this->address)
+    {
     this->setPayload(f1->getPayload());
     std::string srcAdd = f1->getsourceAdd();
     std::string destAdd = f1->getDestAdd();
     f1->clearPayload();
 
-        std::ofstream myfile;
-        myfile.open(this->getName() + "Rx.txt", std::ios::app);
-        myfile << this->getName() << " : " << "Payload \" " <<  this->payload << " \" received..." << " from link " << f1->getName() << std::endl;
-        std::cout << this->getName() << " : " << "Payload \" " <<  this->payload << " \" received..." << " from link " << f1->getName() << std::endl;
-        myfile.close();
-
+    std::ofstream myfile;
+    myfile.open(this->getName() + "Rx.txt", std::ios::app);
+    myfile << this->getName() << " : " << "Payload \" " <<  this->payload << " \" received..." << " from link " << f1->getName() << std::endl;
+    std::cout << this->getName() << " : " << "Payload \" " <<  this->payload << " \" received..." << " from link " << f1->getName() << std::endl;
+    myfile.close();
+    }
 }
 void Host::run(int randomN)
 {
@@ -182,7 +180,10 @@ void Host::run(int randomN)
         {
             if (!myport->incomingFrame->isempty())
             {
-                this->processFrame(myport->incomingFrame);
+                if (myport->incomingFrame->getDestAdd() == this->address)
+                {
+                    this->processFrame(myport->incomingFrame);
+                }
             }
         }
 

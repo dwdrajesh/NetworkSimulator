@@ -16,7 +16,7 @@ class Frame
     void setsourceAdd(std::string);
     std::string getDestAdd();
     void setDestAdd(std::string);
-    void setPayload(std::string);
+    void setPayload(std::string, std::string, std::string);
     void clearPayload();
     void setAddresses();
     //void

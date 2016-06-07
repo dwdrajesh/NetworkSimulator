@@ -31,8 +31,10 @@ void Frame::setDestAdd(std::string b){
     this->destAdd = b;
     this->mymutex.unlock();
 }
-void Frame::setPayload(std::string c){
+void Frame::setPayload(std::string s, std::string d, std::string c){
     this->mymutex.lock();
+    this->sourceAdd = s;
+    this->destAdd = d;
     this->payload = c;
 	this->empty = 0;
     this->mymutex.unlock();
