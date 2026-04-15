@@ -145,7 +145,7 @@ void Host::setFrame(Frame * f1, std::string payload)
 
     std::ofstream myfile;
     myfile.open(this->getName() + "Tx.txt", std::ios::app);
-    myfile << std::cout << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
+    myfile << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
     std::cout << this->getName() << " : " << "Payload sent: \" " <<  payload << " \" to link " << f1->getName() << std::endl;
     myfile.close();
 }
