@@ -10,4 +10,49 @@ The operation of the switch is multi-threaded; once a host starts sending packet
 The access to the link interface is provided exclusively to a node through the mutex at the frame. 
 To run the simulation, the hosts and the frames need to be defined in the main file; the packets received and sent from each hosts are saved in .txt 
 files with the file name being the host names. 
+
+  ---
+  Network Simulator - Detailed Explanation
+
+  This is a multi-threaded Layer 2 (Ethernet) network simulator written in C++. It simulates 4 hosts communicating through a central switch, with realistic Poisson-distributed packet timing.
+
+  Architecture Diagram
+
+                      ┌──────────────────────────────────────────────────┐
+                      │                NETWORK TOPOLOGY                  │
+                      └──────────────────────────────────────────────────┘
+
+    ┌───────────┐   f1 (A2S) ──►   ┌──────────────────┐   ◄── f5 (X2S)   ┌───────────┐
+    │   Alice   │ ════════════════► │                  │ ◄════════════════ │    Xyz    │
+    │  (Host)   │   ◄── f2 (S2A)   │   Layer 2        │   f6 (S2X) ──►   │  (Host)   │
+    │ Thread 1  │ ◄════════════════ │   SWITCH         │ ════════════════► │ Thread 3  │
+    └───────────┘                   │                  │                   └───────────┘
+         │                          │  Forwarding      │                        │
+         │ sends to Bob             │  Table:          │             sends to Cde
+         │                          │  MAC → Port      │                        │
+    ┌───────────┐   f3 (B2S) ──►   │                  │   ◄── f7 (C2S)   ┌───────────┐
+    │    Bob    │ ════════════════► │  (4 port threads)│ ◄════════════════ │    Cde    │
+    │  (Host)   │   ◄── f4 (S2B)   │                  │   f8 (S2C) ──►   │  (Host)   │
+    │ Thread 2  │ ◄════════════════ │                  │ ════════════════► │ Thread 4  │
+    └───────────┘                   └──────────────────┘                   └───────────┘
+
+    Communication pairs:  Alice ↔ Bob    |    Xyz ↔ Cde
+    Full-duplex links:    2 Frames per link (one each direction)
+    Total threads:        8 (4 host + 4 switch port)
+
+  Class Hierarchy
+
+           ┌──────────────┐
+           │  Node (base) │
+           └──────┬───────┘
+             ┌────┴────┐
+       ┌─────┴──┐  ┌───┴──────┐
+       │  Host  │  │  Switch  │
+       └────────┘  └──────────┘
+
+       ┌─────────┐  has 2   ┌───────┐
+       │  Port   │ ───────► │ Frame │  (outgoing + incoming)
+       └─────────┘          └───────┘
+
+  ---
 #######
